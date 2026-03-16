@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Location - AnniCares</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-800 h-screen flex flex-col">
+    <!-- Navigation Bar -->
+    <nav class="bg-blue-600 text-white p-4 shadow-md sticky top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">AnniCares Hospital</h1>
+            <ul class="flex space-x-6 items-center">
+                <li><a href="index.html" class="hover:text-blue-200 font-medium">Back to Home</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Map Container -->
+    <div class="flex-grow flex flex-col relative">
+        <!-- Floating Info Box -->
+        <div class="absolute top-6 left-6 z-10 bg-white p-6 rounded-2xl shadow-2xl max-w-sm border-t-4 border-blue-600">
+            <h2 class="text-2xl font-bold text-blue-900 mb-2">AnniCares Main Campus</h2>
+            <p class="text-gray-600 mb-4 flex items-start text-sm">
+                <svg class="w-5 h-5 mr-2 text-blue-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                    </path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                </svg>
+                <span>Ramadevi,<br />Kanpur, UP 208001<br />India</span>
+            </p>
+            <p class="text-gray-900 font-bold mb-4 flex items-center">
+                <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z">
+                    </path>
+                </svg>
+                9565356383
+            </p>
+            <a href="https://maps.google.com/?q=Kanpur" target="_blank"
+                class="block w-full bg-blue-600 text-white font-bold py-3 px-6 rounded-lg text-center hover:bg-blue-700 transition">Get
+                Directions in Google Maps</a>
+        </div>
+
+        <!-- Fullscreen iframe -->
+        <iframe
+            src="https://maps.google.com/maps?q=Ramadevi+Kanpur+Uttar+Pradesh+India&t=&z=16&ie=UTF8&iwloc=&output=embed"
+            class="flex-grow w-full border-0" allowfullscreen="" loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+    </div>
+</body>
+</html>

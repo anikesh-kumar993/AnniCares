@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Store - AnniCares</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <!-- Navigation Bar -->
+    <nav class="bg-blue-600 text-white p-4 shadow-md sticky top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-xl md:text-2xl font-bold">AnniCares Medical Store</h1>
+            
+            <!-- Mobile Menu Button -->
+            <button id="mobileMenuBtn" class="sm:hidden p-2 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path id="menuIcon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
+
+            <ul class="hidden sm:flex space-x-6 items-center">
+                <li><a href="index.html" class="hover:text-blue-200 font-medium">← Back to Hospital</a></li>
+            </ul>
+        </div>
+
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobileMenu" class="hidden sm:hidden bg-blue-700 mt-4 rounded-xl p-4 space-y-4 shadow-inner">
+            <a href="index.html" class="block hover:bg-blue-600 p-2 rounded transition">Hospital Home</a>
+            <a href="location.html" class="block hover:bg-blue-600 p-2 rounded transition">Map</a>
+            <a href="staff.html" class="block hover:bg-blue-600 p-2 rounded transition">Staff</a>
+        </div>
+    </nav>
+
+    <!-- Hero Banner -->
+    <div class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-12 text-center">
+        <h2 class="text-4xl font-extrabold mb-2">AnniCares Pharmacy</h2>
+        <p class="text-blue-200 text-lg">Your trusted partner for quality medicines in Kanpur</p>
+    </div>
+
+    <!-- Store Location Section -->
+    <section class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row bg-blue-50 rounded-2xl overflow-hidden shadow-lg">
+                <div class="md:w-1/3 p-8 flex flex-col justify-center border-r border-blue-100">
+                    <h3 class="text-2xl font-bold text-blue-900 mb-3">📍 Store Location</h3>
+                    <p class="text-gray-600 mb-4">Ramadevi,<br>Kanpur, UP 208001<br>India</p>
+                    <p class="text-gray-900 font-bold mb-4">📞 9565356383</p>
+                    <p class="text-gray-500 text-sm">⏰ Open: 8:00 AM – 10:00 PM (All Days)</p>
+                </div>
+                <div class="md:w-2/3 h-64 md:h-auto">
+                    <iframe
+                        src="https://maps.google.com/maps?q=Ramadevi+Kanpur+Uttar+Pradesh+India&t=&z=16&ie=UTF8&iwloc=&output=embed"
+                        width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Medicine Catalog -->
+    <section class="py-16 bg-gradient-to-b from-white to-gray-50">
+        <div class="container mx-auto px-4">
+            <h3 class="text-3xl font-extrabold text-center text-blue-900 mb-4">Available Medicines</h3>
+            <p class="text-center text-gray-500 mb-12">Browse and add medicines to your cart. We'll generate a bill slip for you.</p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="medicineGrid">
+                <!-- Medicines will be rendered here by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Floating Cart Button -->
+    <button id="cartBtn" onclick="openCart()"
+        class="fixed bottom-6 right-6 z-[100] w-16 h-16 bg-green-600 text-white rounded-full shadow-2xl flex items-center justify-center hover:bg-green-700 hover:scale-105 transition-all duration-300 border-4 border-white">
+        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z"></path></svg>
+        <span id="cartCount" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center hidden">0</span>
+    </button>
+
+    <!-- Cart Modal -->
+    <div id="cartModal" class="hidden fixed inset-0 bg-black bg-opacity-60 z-[150] flex justify-center items-center backdrop-blur-sm">
+        <div class="bg-white rounded-2xl shadow-2xl p-6 max-w-lg w-full relative mx-4 max-h-[90vh] overflow-y-auto">
+            <button type="button" onclick="closeCart()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-900 text-3xl font-light leading-none">&times;</button>
+            <h3 class="text-2xl font-bold text-blue-900 mb-4">🛒 Your Cart</h3>
+            <div id="cartItems" class="space-y-3 mb-6">
+                <!-- Cart items rendered here -->
+            </div>
+            <div id="cartEmpty" class="text-center text-gray-400 py-8 hidden">
+                <p class="text-lg">Your cart is empty</p>
+            </div>
+            <div id="cartFooter" class="border-t border-gray-200 pt-4">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-lg font-bold text-gray-900">Total:</span>
+                    <span class="text-2xl font-extrabold text-green-600" id="cartTotal">₹0</span>
+                </div>
+                <button onclick="generateBill()" class="w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition">
+                    Generate Bill Slip
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden Bill Slip Template (for html2canvas) -->
+    <div id="billSlipTemplate" class="fixed -left-[9999px] top-0 bg-white p-8 rounded-xl border-4 border-green-600 shadow-2xl w-[500px]">
+        <div class="text-center mb-6 pb-6 border-b-2 border-dashed border-gray-300">
+            <h2 class="text-3xl font-extrabold text-green-800 tracking-tight">AnniCares Pharmacy</h2>
+            <p class="text-gray-500 font-medium mt-1">Medicine Purchase Receipt</p>
+            <p class="text-gray-400 text-sm mt-1">Ramadevi, Kanpur | Ph: 9565356383</p>
+        </div>
+        <!-- Patient Info -->
+        <div class="bg-green-50 rounded-lg p-3 mb-4 border border-green-200">
+            <div class="flex justify-between text-sm">
+                <span class="text-gray-600">Patient Name:</span>
+                <span class="font-bold text-gray-900" id="billPatientName">—</span>
+            </div>
+            <div class="flex justify-between text-sm mt-1">
+                <span class="text-gray-600">Mobile No:</span>
+                <span class="font-bold text-gray-900" id="billPatientMobile">—</span>
+            </div>
+        </div>
+        <div id="billItems" class="space-y-2 text-sm mb-4">
+            <!-- Bill items populated by JS -->
+        </div>
+        <div class="border-t-2 border-dashed border-gray-300 pt-4 mt-4">
+            <div class="flex justify-between text-lg font-bold">
+                <span>Grand Total:</span>
+                <span class="text-green-700" id="billTotal">₹0</span>
+            </div>
+        </div>
+        <div class="mt-6 pt-4 border-t border-gray-200 text-center">
+            <p class="text-xs text-gray-400">Thank you for shopping at AnniCares! Get well soon 💊</p>
+        </div>
+    </div>
+
+    <!-- Bill Slip Modal -->
+    <div id="billModal" class="hidden fixed inset-0 bg-black bg-opacity-75 z-[200] flex justify-center items-center backdrop-blur-sm">
+        <div class="bg-white rounded-2xl shadow-2xl p-6 max-w-lg w-full relative mx-4">
+            <button type="button" onclick="document.getElementById('billModal').classList.add('hidden')" class="absolute top-4 right-4 text-gray-400 hover:text-gray-900 text-3xl font-light leading-none">&times;</button>
+            <h3 class="text-2xl font-bold text-center text-green-800 mb-4">Your Medicine Bill</h3>
+            <div id="billImageContainer" class="flex justify-center mb-6 border border-gray-200 rounded-lg p-2 bg-gray-50">
+                <!-- Bill image inserted here -->
+            </div>
+            <div class="flex flex-col space-y-3">
+                <button id="downloadBillBtn" class="w-full bg-indigo-600 text-white font-bold py-3 rounded-lg hover:bg-indigo-700 transition flex items-center justify-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                    Download Bill Photo
+                </button>
+                <button id="whatsappBillBtn" class="w-full bg-[#25D366] text-white font-bold py-3 rounded-lg hover:bg-[#128C7E] transition flex items-center justify-center">
+                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                    Send Bill on WhatsApp
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Login Check - redirect if not logged in
+        if (!sessionStorage.getItem('patientMobile')) {
+            alert('Please login first to access the Medical Store.');
+            window.location.href = 'index.html';
+        }
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuIcon = document.getElementById('menuIcon');
+
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', () => {
+                const isHidden = mobileMenu.classList.contains('hidden');
+                if (isHidden) {
+                    mobileMenu.classList.remove('hidden');
+                    menuIcon.setAttribute('d', 'M6 18L18 6M6 6l12 12');
+                } else {
+                    mobileMenu.classList.add('hidden');
+                    menuIcon.setAttribute('d', 'M4 6h16M4 12h16m-7 6h7');
+                }
+            });
+        }
+
+        // Medicine Data
+        const medicines = [
+            { id: 1, name: 'Paracetamol 500mg', brand: 'Crocin', price: 30, category: 'Fever & Pain', emoji: '🌡️' },
+            { id: 2, name: 'Azithromycin 500mg', brand: 'Azee', price: 95, category: 'Antibiotic', emoji: '💊' },
+            { id: 3, name: 'Cetirizine 10mg', brand: 'Cetzine', price: 25, category: 'Allergy', emoji: '🤧' },
+            { id: 4, name: 'Pantoprazole 40mg', brand: 'Pan-D', price: 65, category: 'Gastric', emoji: '🫁' },
+            { id: 5, name: 'Amoxicillin 500mg', brand: 'Mox', price: 80, category: 'Antibiotic', emoji: '💉' },
+            { id: 6, name: 'Metformin 500mg', brand: 'Glycomet', price: 45, category: 'Diabetes', emoji: '🩸' },
+            { id: 7, name: 'ORS Sachets (Pack)', brand: 'Electral', price: 20, category: 'Hydration', emoji: '💧' },
+            { id: 8, name: 'Vitamin C 500mg', brand: 'Limcee', price: 30, category: 'Supplement', emoji: '🍊' },
+            { id: 9, name: 'Ibuprofen 400mg', brand: 'Brufen', price: 35, category: 'Pain Relief', emoji: '💪' },
+            { id: 10, name: 'Cough Syrup 100ml', brand: 'Benadryl', price: 110, category: 'Cough & Cold', emoji: '🧴' },
+            { id: 11, name: 'Dolo 650mg', brand: 'Dolo', price: 28, category: 'Fever & Pain', emoji: '🔥' },
+            { id: 12, name: 'Multivitamin Tabs', brand: 'Becosules', price: 55, category: 'Supplement', emoji: '✨' },
+        ];
+
+        let cart = [];
+        let billDataUrl = null;
+
+        // Render Medicine Grid
+        function renderMedicines() {
+            const grid = document.getElementById('medicineGrid');
+            grid.innerHTML = medicines.map(med => `
+                <div class="bg-white rounded-2xl shadow-md border border-gray-100 p-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                    <div class="text-4xl mb-4">${med.emoji}</div>
+                    <span class="inline-block bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1 rounded-full mb-3">${med.category}</span>
+                    <h4 class="text-lg font-bold text-gray-900 mb-1">${med.name}</h4>
+                    <p class="text-sm text-gray-400 mb-3">by ${med.brand}</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xl font-extrabold text-green-600">₹${med.price}</span>
+                        <button onclick="addToCart(${med.id})"
+                            class="bg-blue-600 text-white text-sm font-bold px-4 py-2 rounded-lg hover:bg-blue-700 transition flex items-center">
+                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                            Add
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Add to Cart
+        function addToCart(id) {
+            const med = medicines.find(m => m.id === id);
+            const existing = cart.find(c => c.id === id);
+            if (existing) {
+                existing.qty++;
+            } else {
+                cart.push({ ...med, qty: 1 });
+            }
+            updateCartCount();
+
+            // Show toast
+            const toast = document.createElement('div');
+            toast.className = 'fixed bottom-24 right-6 bg-green-600 text-white font-bold px-5 py-3 rounded-lg shadow-xl z-[200] transition-opacity text-sm';
+            toast.innerText = `✅ ${med.name} added to cart`;
+            document.body.appendChild(toast);
+            setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 1500);
+        }
+
+        // Update Cart Count Badge
+        function updateCartCount() {
+            const countEl = document.getElementById('cartCount');
+            const total = cart.reduce((sum, c) => sum + c.qty, 0);
+            if (total > 0) {
+                countEl.innerText = total;
+                countEl.classList.remove('hidden');
+            } else {
+                countEl.classList.add('hidden');
+            }
+        }
+
+        // Open Cart Modal
+        function openCart() {
+            const itemsEl = document.getElementById('cartItems');
+            const emptyEl = document.getElementById('cartEmpty');
+            const footerEl = document.getElementById('cartFooter');
+
+            if (cart.length === 0) {
+                itemsEl.innerHTML = '';
+                emptyEl.classList.remove('hidden');
+                footerEl.classList.add('hidden');
+            } else {
+                emptyEl.classList.add('hidden');
+                footerEl.classList.remove('hidden');
+                itemsEl.innerHTML = cart.map((item, i) => `
+                    <div class="flex items-center justify-between bg-gray-50 rounded-xl p-3 border border-gray-100">
+                        <div class="flex-1">
+                            <p class="font-bold text-gray-900 text-sm">${item.emoji} ${item.name}</p>
+                            <p class="text-xs text-gray-400">${item.brand} — ₹${item.price} each</p>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button onclick="changeQty(${i}, -1)" class="w-7 h-7 bg-gray-200 rounded-full flex items-center justify-center font-bold text-gray-700 hover:bg-gray-300 transition">−</button>
+                            <span class="font-bold w-6 text-center">${item.qty}</span>
+                            <button onclick="changeQty(${i}, 1)" class="w-7 h-7 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold hover:bg-blue-700 transition">+</button>
+                        </div>
+                        <span class="ml-4 font-bold text-green-600 w-16 text-right">₹${item.price * item.qty}</span>
+                    </div>
+                `).join('');
+                const total = cart.reduce((sum, c) => sum + c.price * c.qty, 0);
+                document.getElementById('cartTotal').innerText = `₹${total}`;
+            }
+            document.getElementById('cartModal').classList.remove('hidden');
+        }
+
+        function closeCart() {
+            document.getElementById('cartModal').classList.add('hidden');
+        }
+
+        // Change Quantity
+        function changeQty(index, delta) {
+            cart[index].qty += delta;
+            if (cart[index].qty <= 0) cart.splice(index, 1);
+            updateCartCount();
+            openCart(); // Re-render
+        }
+
+        // Generate Bill Slip
+        function generateBill() {
+            if (cart.length === 0) return;
+
+            // Get patient info
+            const mobile = sessionStorage.getItem('patientMobile') || '—';
+            const users = JSON.parse(localStorage.getItem('registeredUsers') || '{}');
+            const userData = users[mobile];
+            const patientName = userData ? userData.name : '—';
+
+            // Set patient info on bill
+            document.getElementById('billPatientName').innerText = patientName;
+            document.getElementById('billPatientMobile').innerText = mobile;
+
+            // Populate bill template
+            const billItems = document.getElementById('billItems');
+            const total = cart.reduce((sum, c) => sum + c.price * c.qty, 0);
+
+            billItems.innerHTML = `
+                <div class="flex justify-between font-bold text-gray-700 border-b border-gray-200 pb-2 mb-2">
+                    <span class="w-1/2">Medicine</span>
+                    <span class="w-1/6 text-center">Qty</span>
+                    <span class="w-1/6 text-right">Price</span>
+                    <span class="w-1/6 text-right">Total</span>
+                </div>
+                ${cart.map(item => `
+                    <div class="flex justify-between text-gray-600">
+                        <span class="w-1/2">${item.name}</span>
+                        <span class="w-1/6 text-center">${item.qty}</span>
+                        <span class="w-1/6 text-right">₹${item.price}</span>
+                        <span class="w-1/6 text-right font-bold">₹${item.price * item.qty}</span>
+                    </div>
+                `).join('')}
+            `;
+            document.getElementById('billTotal').innerText = `₹${total}`;
+
+            // Close cart modal
+            closeCart();
+
+            // Generate image
+            setTimeout(() => {
+                html2canvas(document.getElementById('billSlipTemplate'), { scale: 2 }).then(canvas => {
+                    billDataUrl = canvas.toDataURL('image/png');
+
+                    const imgContainer = document.getElementById('billImageContainer');
+                    imgContainer.innerHTML = `<img src="${billDataUrl}" class="w-full h-auto max-h-72 object-contain rounded" alt="Medicine Bill">`;
+
+                    document.getElementById('billModal').classList.remove('hidden');
+
+                    // Clear cart
+                    cart = [];
+                    updateCartCount();
+
+                    // Automatic WhatsApp Redirect
+                    setTimeout(() => {
+                        document.getElementById('whatsappBillBtn').click();
+                    }, 1500);
+                });
+            }, 300);
+        }
+
+        // Download Bill
+        document.getElementById('downloadBillBtn').addEventListener('click', () => {
+            if (billDataUrl) {
+                const link = document.createElement('a');
+                link.download = 'AnniCares_Medicine_Bill.png';
+                link.href = billDataUrl;
+                link.click();
+            }
+        });
+
+        // WhatsApp Bill
+        document.getElementById('whatsappBillBtn').addEventListener('click', () => {
+            const savedMobile = sessionStorage.getItem('patientMobile');
+
+            const msg = encodeURIComponent(
+                `*AnniCares Pharmacy - Medicine Bill*\n\n` +
+                `Your medicine bill has been generated.\n` +
+                `Please download the bill photo and attach it here.\n\n` +
+                `📍 Ramadevi, Kanpur\n` +
+                `📞 9565356383\n\n` +
+                `Thank you for choosing AnniCares! 💊`
+            );
+
+            if (savedMobile) {
+                window.open(`https://wa.me/${savedMobile}?text=${msg}`, '_blank');
+            } else {
+                window.open(`https://wa.me/?text=${msg}`, '_blank');
+            }
+
+            document.getElementById('billModal').classList.add('hidden');
+        });
+
+        // Init
+        renderMedicines();
+    </script>
+</body>
+</html>

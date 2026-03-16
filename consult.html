@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Appointment - HMS</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f8fafc; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; margin: 0; color: #334155; }
+        .container { background: white; padding: 40px; border-radius: 12px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05); width: 100%; max-width: 450px; }
+        h2 { margin-top: 0; color: #0f172a; text-align: center; margin-bottom: 25px; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.9rem; }
+        input, select { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; font-size: 1rem; transition: border-color 0.2s; }
+        input:focus, select:focus { outline: none; border-color: #3b82f6; ring: 2px solid #bfdbfe; }
+        button { width: 100%; padding: 14px; background-color: #3b82f6; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 1rem; font-weight: 600; transition: background-color 0.2s; }
+        button:hover { background-color: #2563eb; }
+        #message { margin-top: 20px; text-align: center; padding: 10px; border-radius: 6px; display: none; }
+        .success { background-color: #dcfce7; color: #166534; border: 1px solid #bbf7d0; display: block !important; }
+        .error { background-color: #fee2e2; color: #991b1b; border: 1px solid #fecaca; display: block !important; }
+        .nav-links { display: flex; gap: 15px; margin-bottom: 30px; font-weight: 500; }
+        .nav-links a { color: #3b82f6; text-decoration: none; }
+        .nav-links a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="nav-links">
+        <a href="login.html">Login Pages</a>
+        <a href="admin.html">Admin Dashboard</a>
+    </div>
+
+    <div class="container">
+        <h2>Book a Consultation</h2>
+        
+        <form id="bookingForm">
+            <div class="form-group">
+                <label>Patient Full Name</label>
+                <input type="text" id="patientName" placeholder="e.g. John Doe" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Select Specialist</label>
+                <select id="doctor" required>
+                    <option value="" disabled selected>Select a doctor...</option>
+                    <option value="Dr. Smith (Cardiology)">Dr. Smith (Cardiology)</option>
+                    <option value="Dr. Adams (Pediatrics)">Dr. Adams (Pediatrics)</option>
+                    <option value="Dr. Wilson (Neurology)">Dr. Wilson (Neurology)</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Preferred Date</label>
+                <input type="date" id="date" required>
+            </div>
+            
+            <button type="submit">Submit Request</button>
+        </form>
+        
+        <div id="message"></div>
+    </div>
+
+    <script>
+        /**
+         * How to connect Frontend Fetch API to Backend Route:
+         * 1. Capture the form submission event.
+         * 2. Gather values from form inputs.
+         * 3. Send a fetch() request with method 'POST'.
+         * 4. Convert the data object to JSON format in the body.
+         * 5. Set 'Content-Type': 'application/json' in the headers.
+         * 6. Await the response and update the UI accordingly.
+         */
+        
+        const form = document.getElementById('bookingForm');
+        const messageDiv = document.getElementById('message');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault(); // Prevent page reload
+            
+            const btn = form.querySelector('button');
+            const originalText = btn.innerText;
+            btn.innerText = 'Sending...';
+            btn.disabled = true;
+
+            // Prepare Payload Object
+            const appointmentData = {
+                patientName: document.getElementById('patientName').value,
+                doctor: document.getElementById('doctor').value,
+                date: document.getElementById('date').value
+            };
+
+            try {
+                // Call our Node.js API Endpoint
+                const response = await fetch('/api/appointments', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json' // Essential for Express express.json() parser
+                    },
+                    body: JSON.stringify(appointmentData)
+                });
+
+                const result = await response.json();
+                
+                if (response.ok) {
+                    messageDiv.innerText = result.message;
+                    messageDiv.className = 'success';
+                    form.reset(); // Clear form fields
+                } else {
+                    messageDiv.innerText = result.error || 'Failed to book appointment.';
+                    messageDiv.className = 'error';
+                }
+            } catch (error) {
+                console.error('Network Error:', error);
+                messageDiv.innerText = 'Server error. Please try again later.';
+                messageDiv.className = 'error';
+            } finally {
+                btn.innerText = originalText;
+                btn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>

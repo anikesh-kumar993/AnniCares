@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #eef2f6; margin: 0; padding: 20px; color: #333; }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .card { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        h2 { margin-top: 0; color: #1e293b; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #f1f5f9; }
+        th { background-color: #f8fafc; color: #475569; font-weight: 600; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.5px; }
+        tr:hover td { background-color: #f8fafc; }
+        
+        .status-badge { padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; background: #dbeafe; color: #1e40af; }
+        
+        nav a { margin-right: 15px; color: #3b82f6; text-decoration: none; font-weight: 500; }
+        nav a:hover { text-decoration: underline; }
+        
+        .refresh-btn { background: #3b82f6; color: white; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer; text-decoration: none; font-size: 0.9rem; }
+        .refresh-btn:hover { background: #2563eb; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <nav>
+                <a href="index.html">← Public Booking Page</a>
+                <a href="login.html">Login Portal</a>
+            </nav>
+            <div class="user-info">
+                <strong>Admin Session Active</strong>
+            </div>
+        </header>
+
+        <div class="card">
+            <div style="display:flex; justify-content: space-between; align-items: center;">
+                <h2>System Appointments Database</h2>
+                <button class="refresh-btn" onclick="fetchAppointments()">↻ Refresh Data</button>
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Req ID</th>
+                        <th>Patient Name</th>
+                        <th>Assigned Doctor</th>
+                        <th>Scheduled Date</th>
+                        <th>System Status</th>
+                    </tr>
+                </thead>
+                <tbody id="appointmentTableBody">
+                    <tr>
+                        <td colspan="5" style="text-align:center; padding: 30px;">Loading data from server...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        /**
+         * Fetch API Setup
+         * Used to retrieve data from the Node.js /api/appointments route 
+         * and populate the HTML table.
+         */
+        async function fetchAppointments() {
+            const tbody = document.getElementById('appointmentTableBody');
+            
+            try {
+                // 1. Fetch data from backend route
+                const response = await fetch('/api/appointments');
+                const appointments = await response.json();
+                
+                // 2. Clear table content
+                tbody.innerHTML = '';
+                
+                // 3. Handle empty state
+                if(appointments.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">No appointments found in database.</td></tr>';
+                    return;
+                }
+
+                // 4. Map the array to table rows
+                appointments.forEach(app => {
+                    const statusBadge = `<span class="status-badge">${app.status}</span>`;
+                    
+                    const row = `
+                        <tr>
+                            <td>#${app.id.toString().slice(-4)}</td>
+                            <td style="font-weight: 500;">${app.patientName}</td>
+                            <td>${app.doctor}</td>
+                            <td>${app.date}</td>
+                            <td>${statusBadge}</td>
+                        </tr>
+                    `;
+                    // 5. Append row to table
+                    tbody.innerHTML += row;
+                });
+
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color: red;">Failed to load data. Is the Node.js server running?</td></tr>';
+            }
+        }
+
+        // Initialize table on page load
+        document.addEventListener('DOMContentLoaded', fetchAppointments);
+    </script>
+</body>
+</html>

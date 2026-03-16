@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pediatrics Department - AnniCares</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        .doctor-bg {
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        .form-overlay {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(5px);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <!-- Navbar -->
+    <nav class="bg-blue-600 text-white p-4 shadow-md sticky top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="index.html" class="mr-6 font-semibold flex items-center hover:text-blue-200 transition">
+                <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                <span class="hidden sm:inline">Back to Home</span>
+            </a>
+            <h1 class="text-xl md:text-2xl font-bold">Pediatrics Dept.</h1>
+            
+            <!-- Mobile Menu Button -->
+            <button id="mobileMenuBtn" class="sm:hidden p-2 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path id="menuIcon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobileMenu" class="hidden sm:hidden bg-blue-700 mt-4 rounded-xl p-4 space-y-4 shadow-inner">
+            <a href="index.html" class="block hover:bg-blue-600 p-2 rounded transition">Home</a>
+            <a href="location.html" class="block hover:bg-blue-600 p-2 rounded transition">Map</a>
+            <a href="staff.html" class="block hover:bg-blue-600 p-2 rounded transition">Staff</a>
+            <a href="medical-store.html" class="block hover:bg-blue-600 p-2 rounded transition">Medical Store</a>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <div class="bg-gradient-to-r from-emerald-500 to-teal-500 py-12 md:py-16 border-b border-green-200">
+        <div class="container mx-auto px-4 text-center">
+            <div class="w-20 h-20 bg-white bg-opacity-20 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <svg class="w-10 h-10 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <circle cx="12" cy="8" r="4" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2" />
+                </svg>
+            </div>
+            <h2 class="text-4xl font-extrabold text-white mb-4">Our Pediatric Specialists</h2>
+            <p class="text-green-100 max-w-2xl mx-auto text-lg">Gentle and expert care designed specifically for infants, children, and teens.</p>
+        </div>
+    </div>
+
+    <!-- Doctors Grid -->
+    <div class="container mx-auto px-4 py-16">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+
+            <!-- Doctor 1 -->
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 flex flex-col border border-gray-100">
+                <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=600&auto=format&fit=crop" alt="Dr. Adams" class="w-full h-64 object-cover object-top">
+                <div class="p-6 flex-grow">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="text-2xl font-bold text-gray-900">Dr. Susan Adams</h3>
+                        <span class="bg-green-100 text-green-700 text-xs font-bold px-3 py-1 rounded-full">Head of Dept</span>
+                    </div>
+                    <p class="text-emerald-500 font-semibold mb-4">General Pediatrician</p>
+                    <p class="text-gray-600 mb-5 text-sm">Expert in childhood development, immunizations, and preventive healthcare for children of all ages.</p>
+
+                    <!-- Degrees -->
+                    <div class="mb-4">
+                        <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">🎓 Qualifications</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-blue-50 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full">MBBS</span>
+                            <span class="bg-blue-50 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full">MD (Pediatrics)</span>
+                            <span class="bg-blue-50 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full">IAP Fellow</span>
+                        </div>
+                    </div>
+
+                    <!-- Available Days -->
+                    <div class="mb-4">
+                        <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">📅 Available Days</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-green-100 text-green-700 text-xs font-bold px-3 py-1 rounded-full">Mon</span>
+                            <span class="bg-green-100 text-green-700 text-xs font-bold px-3 py-1 rounded-full">Tue</span>
+                            <span class="bg-green-100 text-green-700 text-xs font-bold px-3 py-1 rounded-full">Wed</span>
+                            <span class="bg-green-100 text-green-700 text-xs font-bold px-3 py-1 rounded-full">Thu</span>
+                            <span class="bg-green-100 text-green-700 text-xs font-bold px-3 py-1 rounded-full">Fri</span>
+                            <span class="bg-gray-100 text-gray-400 text-xs font-bold px-3 py-1 rounded-full line-through">Sat</span>
+                        </div>
+                    </div>
+
+                    <!-- Fee Structure -->
+                    <div class="bg-amber-50 rounded-xl p-4 border border-amber-200">
+                        <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">💰 Fee Structure</h4>
+                        <div class="space-y-1 text-sm">
+                            <div class="flex justify-between"><span class="text-gray-600">Consultation</span><span class="font-bold text-gray-900">₹500</span></div>
+                            <div class="flex justify-between"><span class="text-gray-600">Follow-up</span><span class="font-bold text-gray-900">₹250</span></div>
+                            <div class="flex justify-between"><span class="text-gray-600">Vaccination Visit</span><span class="font-bold text-gray-900">₹300 + vaccine cost</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-6 bg-gray-50 border-t border-gray-100 mt-auto">
+                    <button onclick="openAppointmentModal('Dr. Susan Adams', 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=600&auto=format&fit=crop', '₹500', 'Pediatrics')" class="block w-full text-center bg-emerald-500 text-white font-bold py-3 rounded-lg hover:bg-emerald-600 transition tracking-wide">Book Consultation</button>
+                </div>
+            </div>
+
+            <!-- Doctor 2 -->
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 flex flex-col border border-gray-100">
+                <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?q=80&w=600&auto=format&fit=crop" alt="Dr. Lee" class="w-full h-64 object-cover object-top">
+                <div class="p-6 flex-grow">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">Dr. Justin Lee</h3>
+                    <p class="text-emerald-500 font-semibold mb-4">Pediatric Allergist</p>
+                    <p class="text-gray-600 mb-5 text-sm">Specializing in asthma, food allergies, and immune system disorders in children.</p>
+
+                    <!-- Degrees -->
+                    <div class="mb-4">
+                        <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">🎓 Qualifications</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-blue-50 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full">MBBS</span>
+                            <span class="bg-blue-50 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full">DCH</span>
+                            <span class="bg-blue-50 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full">DNB (Pediatrics)</span>
+                            <span class="bg-blue-50 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full">Allergy Fellow</span>
+                        </div>
+                    </div>
+
+                    <!-- Available Days -->
+                    <div class="mb-4">
+                        <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">📅 Available Days</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-gray-100 text-gray-400 text-xs font-bold px-3 py-1 rounded-full line-through">Mon</span>
+                            <span class="bg-green-100 text-green-700 text-xs font-bold px-3 py-1 rounded-full">Tue</span>
+                            <span class="bg-gray-100 text-gray-400 text-xs font-bold px-3 py-1 rounded-full line-through">Wed</span>
+                            <span class="bg-green-100 text-green-700 text-xs font-bold px-3 py-1 rounded-full">Thu</span>
+                            <span class="bg-gray-100 text-gray-400 text-xs font-bold px-3 py-1 rounded-full line-through">Fri</span>
+                            <span class="bg-green-100 text-green-700 text-xs font-bold px-3 py-1 rounded-full">Sat</span>
+                        </div>
+                    </div>
+
+                    <!-- Fee Structure -->
+                    <div class="bg-amber-50 rounded-xl p-4 border border-amber-200">
+                        <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">💰 Fee Structure</h4>
+                        <div class="space-y-1 text-sm">
+                            <div class="flex justify-between"><span class="text-gray-600">Consultation</span><span class="font-bold text-gray-900">₹600</span></div>
+                            <div class="flex justify-between"><span class="text-gray-600">Follow-up</span><span class="font-bold text-gray-900">₹300</span></div>
+                            <div class="flex justify-between"><span class="text-gray-600">Allergy Test</span><span class="font-bold text-gray-900">₹2,500</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-6 bg-gray-50 border-t border-gray-100 mt-auto">
+                    <button onclick="openAppointmentModal('Dr. Justin Lee', 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?q=80&w=600&auto=format&fit=crop', '₹600', 'Pediatrics')" class="block w-full text-center bg-emerald-500 text-white font-bold py-3 rounded-lg hover:bg-emerald-600 transition tracking-wide">Book Consultation</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Appointment Modal -->
+    <div id="appointmentModal" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black opacity-60" onclick="closeAppointmentModal()"></div>
+        <div id="modalContent" class="doctor-bg relative bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden flex flex-col min-h-[500px]">
+            <div class="form-overlay flex-grow p-8 flex flex-col">
+                <button onclick="closeAppointmentModal()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-2xl font-bold">&times;</button>
+                
+                <div class="text-center mb-6">
+                    <h3 class="text-3xl font-extrabold text-blue-900" id="modalDoctorName">Book Appointment</h3>
+                    <p class="text-gray-600 font-medium">Schedule your consultation now</p>
+                </div>
+
+                <form id="appointmentForm" class="space-y-4 flex-grow">
+                    <input type="hidden" id="department" value="Pediatrics">
+                    <input type="hidden" id="selectedDoctor">
+                    <input type="hidden" id="consultationFee">
+
+                    <div>
+                        <label class="block text-gray-700 font-bold mb-1">Full Name</label>
+                        <input type="text" id="patientName" placeholder="Enter your name" class="w-full border-2 border-gray-200 px-4 py-2 rounded-xl focus:outline-none focus:border-blue-500 transition" required>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-gray-700 font-bold mb-1">Preferred Date</label>
+                            <input type="date" id="appointmentDate" class="w-full border-2 border-gray-200 px-4 py-2 rounded-xl focus:outline-none focus:border-blue-500 transition" required>
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 font-bold mb-1">Preferred Time</label>
+                            <select id="appointmentTime" class="w-full border-2 border-gray-200 px-4 py-2 rounded-xl focus:outline-none focus:border-blue-500 transition" required>
+                                <option value="09:00 AM">09:00 AM</option>
+                                <option value="10:00 AM">10:00 AM</option>
+                                <option value="11:00 AM">11:00 AM</option>
+                                <option value="12:00 PM">12:00 PM</option>
+                                <option value="02:00 PM">02:00 PM</option>
+                                <option value="03:00 PM">03:00 PM</option>
+                                <option value="04:00 PM">04:00 PM</option>
+                                <option value="05:00 PM">05:00 PM</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-gray-700 font-bold mb-2">Payment Method</label>
+                        <div class="grid grid-cols-2 gap-4">
+                            <label class="flex items-center p-3 border-2 border-gray-100 rounded-xl cursor-pointer hover:border-blue-500 transition">
+                                <input type="radio" name="paymentMethod" value="Cash" class="mr-2" checked>
+                                <span class="text-gray-700 font-semibold">Cash</span>
+                            </label>
+                            <label class="flex items-center p-3 border-2 border-gray-100 rounded-xl cursor-pointer hover:border-blue-500 transition">
+                                <input type="radio" name="paymentMethod" value="UPI/Online" class="mr-2">
+                                <span class="text-gray-700 font-semibold">UPI/Online</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 mt-auto">
+                        <button type="submit" class="w-full bg-emerald-600 text-white font-bold py-4 rounded-xl hover:bg-emerald-700 shadow-lg transform active:scale-95 transition tracking-widest uppercase">Confirm Booking</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden Slip Template -->
+    <div id="slipTemplate" class="fixed -left-[9999px] top-0 bg-white p-10 rounded-xl border-[10px] border-emerald-600 shadow-2xl w-[500px] text-gray-800">
+        <div class="text-center mb-8 pb-6 border-b-4 border-dashed border-gray-200">
+            <h2 class="text-4xl font-extrabold text-blue-900 tracking-tighter">AnniCares Hospital</h2>
+            <div class="bg-emerald-600 text-white py-1 px-4 inline-block rounded-full text-xs font-bold mt-2 uppercase tracking-widest">Medical Consultation Slip</div>
+        </div>
+        
+        <div class="space-y-6">
+            <div class="flex flex-col border-b border-gray-100 pb-2">
+                <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">Patient Name</span>
+                <span class="text-xl font-bold text-gray-900" id="slipPatientName"></span>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-8">
+                <div class="flex flex-col border-b border-gray-100 pb-2">
+                    <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">Consulting Doctor</span>
+                    <span class="text-lg font-bold text-emerald-600" id="slipDoctorName"></span>
+                </div>
+                <div class="flex flex-col border-b border-gray-100 pb-2">
+                    <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">Department</span>
+                    <span class="text-lg font-bold text-gray-900">Pediatrics</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-8">
+                <div class="flex flex-col border-b border-gray-100 pb-2">
+                    <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">Date</span>
+                    <span class="text-lg font-bold text-gray-900" id="slipDate"></span>
+                </div>
+                <div class="flex flex-col border-b border-gray-100 pb-2">
+                    <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">Time Slot</span>
+                    <span class="text-lg font-bold text-gray-900" id="slipTime"></span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-8">
+                <div class="flex flex-col border-b border-gray-100 pb-2">
+                    <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">Consultation Fee</span>
+                    <span class="text-xl font-black text-gray-900" id="slipFee"></span>
+                </div>
+                <div class="flex flex-col border-b border-gray-100 pb-2">
+                    <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">Payment Status</span>
+                    <span class="text-lg font-bold text-green-600" id="slipPayment"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-10 pt-6 text-center italic text-gray-400 text-sm border-t border-gray-100">
+            Professional Child Care Excellence • AnniCares Hospital
+        </div>
+    </div>
+
+    <!-- Slip Confirmation Modal -->
+    <div id="slipModal" class="hidden fixed inset-0 z-[200] flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black opacity-80" onclick="document.getElementById('slipModal').classList.add('hidden')"></div>
+        <div class="relative bg-white w-full max-w-lg rounded-3xl shadow-2xl p-6 flex flex-col items-center">
+            <button onclick="document.getElementById('slipModal').classList.add('hidden')" class="absolute top-4 right-4 text-gray-400 hover:text-gray-800 text-2xl font-bold">&times;</button>
+            
+            <div class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mb-4">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            </div>
+            
+            <h3 class="text-2xl font-bold text-blue-900 mb-2">Booking Confirmed!</h3>
+            <p class="text-gray-500 mb-6 text-center">Your appointment has been successfully scheduled. Please share your digital slip.</p>
+            
+            <div id="slipDisplay" class="w-full bg-gray-50 rounded-xl p-2 border-2 border-dashed border-gray-200 mb-6 overflow-hidden flex justify-center">
+                <!-- Canvas Image will appear here -->
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4 w-full">
+                <button id="downloadBtn" class="bg-indigo-600 text-white font-bold py-3 rounded-xl hover:bg-indigo-700 transition">Download Slip</button>
+                <button id="whatsappBtn" class="bg-[#25D366] text-white font-bold py-3 rounded-xl hover:bg-[#128C7E] transition flex items-center justify-center">
+                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" /></svg>
+                    Send to WhatsApp
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let generatedSlipUrl = null;
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuIcon = document.getElementById('menuIcon');
+
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', () => {
+                const isHidden = mobileMenu.classList.contains('hidden');
+                if (isHidden) {
+                    mobileMenu.classList.remove('hidden');
+                    menuIcon.setAttribute('d', 'M6 18L18 6M6 6l12 12');
+                } else {
+                    mobileMenu.classList.add('hidden');
+                    menuIcon.setAttribute('d', 'M4 6h16M4 12h16m-7 6h7');
+                }
+            });
+        }
+
+        function openAppointmentModal(doctorName, bgImage, fee) {
+            // Check login
+            if (!sessionStorage.getItem('patientMobile')) {
+                alert('Please login first to book an appointment!');
+                window.location.href = 'index.html';
+                return;
+            }
+
+            document.getElementById('modalDoctorName').innerText = doctorName;
+            document.getElementById('selectedDoctor').value = doctorName;
+            document.getElementById('consultationFee').value = fee;
+            document.getElementById('modalContent').style.backgroundImage = `url('${bgImage}')`;
+            
+            // Set patient name if available
+            const savedName = localStorage.getItem('patientName');
+            if (savedName) document.getElementById('patientName').value = savedName;
+
+            document.getElementById('appointmentModal').classList.remove('hidden');
+        }
+
+        function closeAppointmentModal() {
+            document.getElementById('appointmentModal').classList.add('hidden');
+        }
+
+        document.getElementById('appointmentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const submitBtn = this.querySelector('button[type="submit"]');
+            submitBtn.innerText = 'Processing...';
+            submitBtn.disabled = true;
+
+            const name = document.getElementById('patientName').value;
+            const doctor = document.getElementById('selectedDoctor').value;
+            const date = document.getElementById('appointmentDate').value;
+            const time = document.getElementById('appointmentTime').value;
+            const fee = document.getElementById('consultationFee').value;
+            const payment = Array.from(document.getElementsByName('paymentMethod')).find(r => r.checked).value;
+
+            // Update Slip
+            document.getElementById('slipPatientName').innerText = name;
+            document.getElementById('slipDoctorName').innerText = doctor;
+            document.getElementById('slipDate').innerText = date;
+            document.getElementById('slipTime').innerText = time;
+            document.getElementById('slipFee').innerText = fee;
+            document.getElementById('slipPayment').innerText = payment === 'Cash' ? 'Pay at Reception' : 'Online Paid';
+
+            setTimeout(() => {
+                html2canvas(document.getElementById('slipTemplate'), { scale: 2 }).then(canvas => {
+                    generatedSlipUrl = canvas.toDataURL("image/png");
+                    
+                    const slipDisplay = document.getElementById('slipDisplay');
+                    slipDisplay.innerHTML = `<img src="${generatedSlipUrl}" class="max-h-48 rounded shadow-sm">`;
+                    
+                    document.getElementById('appointmentModal').classList.add('hidden');
+                    document.getElementById('slipModal').classList.remove('hidden');
+                    
+                    submitBtn.innerText = 'Confirm Booking';
+                    submitBtn.disabled = false;
+
+                    // Automatic WhatsApp Redirect
+                    setTimeout(() => {
+                        document.getElementById('whatsappBtn').click();
+                    }, 1500);
+                });
+            }, 500);
+        });
+
+        document.getElementById('downloadBtn').onclick = () => {
+            const link = document.createElement('a');
+            link.download = 'AnniCares_Appointment.png';
+            link.href = generatedSlipUrl;
+            link.click();
+        };
+
+        document.getElementById('whatsappBtn').onclick = () => {
+            const name = document.getElementById('slipPatientName').innerText;
+            const doctor = document.getElementById('slipDoctorName').innerText;
+            const date = document.getElementById('slipDate').innerText;
+            const time = document.getElementById('slipTime').innerText;
+            const fee = document.getElementById('slipFee').innerText;
+            const mobile = sessionStorage.getItem('patientMobile');
+
+            const message = encodeURIComponent(
+                `🏥 *AnniCares Hospital - Appointment Confirmed*\n\n` +
+                `👤 *Patient:* ${name}\n` +
+                `👨‍⚕️ *Doctor:* ${doctor}\n` +
+                `📅 *Date:* ${date}\n` +
+                `⏰ *Time:* ${time}\n` +
+                `💰 *Fee:* ${fee}\n\n` +
+                `Your digital slip has been generated. Please present it at the reception.`
+            );
+
+            window.open(`https://wa.me/${mobile}?text=${message}`, '_blank');
+        };
+    </script>
+</body>
+</html>
